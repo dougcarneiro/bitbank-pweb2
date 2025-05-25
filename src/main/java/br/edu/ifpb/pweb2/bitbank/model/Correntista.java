@@ -1,7 +1,6 @@
 package br.edu.ifpb.pweb2.bitbank.model;
 
 import java.io.Serializable;
-
 import lombok.Data;
 
 @Data

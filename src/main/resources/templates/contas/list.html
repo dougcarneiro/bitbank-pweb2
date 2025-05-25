@@ -1,0 +1,37 @@
+<html xmlns:th="www.thymeleaf.org">
+
+<head>
+    <meta charset="UTF-8">
+    <title>Cadastro de Contas</title>
+</head>
+
+<body>
+    <h1>Contas Cadastradas</h1>
+    <hr />
+
+    <form th:action="@{/contas/form}" method="GET">
+        <button class="btn btn-primary" type="submit">Nova</button>
+    </form>
+    <br />
+
+    <div th:text="${mensagem}" style="color: red"></div>
+
+    <table border="1">
+        <thead>
+            <tr>
+                <th>Número</th>
+                <th>Correntista</th>
+                <th>Data abertura</th>
+            </tr>
+        </thead>
+        <tbody>
+            <tr th:each="conta : ${contas}">
+                <td><a th:href="@{/conta/{id(id=${conta.id})}}" th:text="${conta.numero}"></a></td>
+                <td th:text="${conta.correntista != null} ? ${conta.correntista.nome} : '---'"></td>
+                <td th:text="${#dates.format(conta.data, 'dd/MM/yyyy')}"></td>
+            </tr>
+        </tbody>
+    </table>
+</body>
+
+</html>

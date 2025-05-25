@@ -6,6 +6,8 @@ import java.util.Date;
 import java.util.HashSet;
 import java.util.Set;
 
+import org.springframework.format.annotation.DateTimeFormat;
+
 import lombok.Data;
 
 @Data
@@ -16,6 +18,7 @@ public class Conta implements Serializable {
 
     private String numero;
 
+    @DateTimeFormat(pattern = "yyyy-MM-dd")
     private Date data;
 
     private Set<Transacao> transacoes = new HashSet<Transacao>();
@@ -28,5 +31,9 @@ public class Conta implements Serializable {
             total = total.add(t.getValor());
         }
         return total;
+    }
+
+    public Conta(Correntista correntista) {
+        this.correntista = correntista;
     }
 }
