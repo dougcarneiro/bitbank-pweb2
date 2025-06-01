@@ -7,6 +7,7 @@ import org.springframework.stereotype.Component;
 
 import br.edu.ifpb.pweb2.bitbank.model.Correntista;
 import br.edu.ifpb.pweb2.bitbank.repository.CorrentistaRepository;
+import br.edu.ifpb.pweb2.bitbank.util.PasswordUtil;
 
 @Component
 public class CorrentistaService implements Service<Correntista, Integer> {
@@ -26,6 +27,7 @@ public class CorrentistaService implements Service<Correntista, Integer> {
 
     @Override
     public Correntista save(Correntista correntista) {
+        correntista.setSenha(PasswordUtil.hashPassword(correntista.getSenha()));
         return correntistaRepository.save(correntista);
     }
     

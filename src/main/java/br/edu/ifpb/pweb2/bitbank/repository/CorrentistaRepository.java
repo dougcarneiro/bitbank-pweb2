@@ -28,7 +28,10 @@ public class CorrentistaRepository {
     }
 
     public List<Correntista> findAll() {
-        List<Correntista> correntistas = repositorio.values().stream().collect(Collectors.toList());
+        List<Correntista> correntistas = repositorio.values().stream()
+            // Excluir o Admin padrão do sistema
+            .filter(c -> c.getEmail() == null || !c.getEmail().equalsIgnoreCase("admin@bitbank.com"))
+            .collect(Collectors.toList());
         return correntistas;
     }
 
@@ -43,4 +46,10 @@ public class CorrentistaRepository {
         return contaMaxId.getId() == null ? 1 : contaMaxId.getId() + 1;
     }
 
+    public Correntista findByEmail(String email) {
+        return repositorio.values().stream()
+                .filter(c -> c.getEmail() != null && c.getEmail().equalsIgnoreCase(email))
+                .findFirst()
+                .orElse(null);
+    }
 }
