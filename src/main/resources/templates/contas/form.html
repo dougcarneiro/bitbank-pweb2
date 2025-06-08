@@ -3,9 +3,12 @@
 
 <head>
     <title>BitBank - Cadastro de Conta</title>
+    <link rel="stylesheet" th:href="@{/css/style.css}" />
+    <link rel="icon" th:href="@{/imagens/favicon.ico}" type="image/x-icon" />
 </head>
 
 <body>
+    <div th:insert="~{cabecalho}"></div>
     <h1 class="mb-3">Cadastro de Conta</h1>
 
     <form th:action="@{/contas}" method="POST" th:object="${conta}">

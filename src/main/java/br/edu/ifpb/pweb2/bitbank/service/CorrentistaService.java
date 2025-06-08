@@ -22,7 +22,7 @@ public class CorrentistaService implements Service<Correntista, Integer> {
     
     @Override
     public Correntista findById(Integer id) {
-        return correntistaRepository.findById(id);
+        return correntistaRepository.findById(id).orElse(null);
     }
 
     @Override

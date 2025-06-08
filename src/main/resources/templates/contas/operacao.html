@@ -1,0 +1,49 @@
+<!doctype html>
+<html lang="pt_BR" xmlns:th="www.thymeleaf.org">
+
+<head>
+    <title>BitBank - Cadastro de Operações</title>
+    <link rel="stylesheet" th:href="@{/css/style.css}" />
+    <link rel="icon" th:href="@{/imagens/favicon.ico}" type="image/x-icon" />
+</head>
+
+<body>
+    <div th:insert="~{cabecalho}"></div>
+    <h1>Cadastro de Operação</h1>
+    <div th:if="${conta == null}">
+        <form th:action="@{/contas/operacao}" method="POST">
+            <label for="nuConta">Número da conta</label>
+            <input type="text" id="nuConta" name="nuConta" class="form-control" />
+            <button type="submit">Próximo</button>
+        </form>
+    </div>
+    <div th:if="${conta != null}">
+        <ul>
+            <li>Conta:
+                <span th:text="${conta.numero}"></span>
+            </li>
+            <li>Correntista:
+                <span th:text="${conta.correntista.nome}"></span>
+            </li>
+            <li>Data abertura:
+                <span th:text="${#dates.format(conta.data, 'dd/MM/yyyy')}"></span>
+            </li>
+        </ul>
+        <div style="margin-bottom: 30px;"></div>
+        <h4>Informações da transação</h4>
+        <hr class="mb-4">
+        <form action="operacao" method="POST" th:object="${transacao}">
+            <input type="hidden" th:field="*{id}" />
+            <input type="hidden" th:value="${conta.numero}" id="nuConta" name="nuConta" />
+            <label for="descricao">Descrição</label>
+            <input type="text" class="form-control" th:field="*{descricao}" /> <br />
+            <label for="data">Data</label>
+            <input type="date" class="form-control" th:field="*{data}" /> <br />
+            <label for="valor">Valor</label>
+            <input type="text" class="form-control" th:field="*{valor}" /><br />
+            <button type="submit">Realizar operação</button>
+        </form>
+    </div>
+</body>
+
+</html>

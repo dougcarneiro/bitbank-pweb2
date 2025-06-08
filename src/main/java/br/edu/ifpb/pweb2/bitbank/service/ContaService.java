@@ -8,7 +8,6 @@ import org.springframework.stereotype.Component;
 import br.edu.ifpb.pweb2.bitbank.model.Conta;
 import br.edu.ifpb.pweb2.bitbank.model.Correntista;
 import br.edu.ifpb.pweb2.bitbank.repository.ContaRepository;
-import br.edu.ifpb.pweb2.bitbank.repository.CorrentistaRepository;
 
 @Component
 public class ContaService implements Service<Conta, Integer> {
@@ -17,7 +16,7 @@ public class ContaService implements Service<Conta, Integer> {
     private ContaRepository contaRepository;
 
     @Autowired
-    private CorrentistaRepository correntistaRepository;
+    private CorrentistaService correntistaService;
 
     @Override
     public List<Conta> findAll() {
@@ -26,13 +25,25 @@ public class ContaService implements Service<Conta, Integer> {
 
     @Override
     public Conta findById(Integer id) {
-        return contaRepository.findById(id);
+        return contaRepository.findById(id).orElse(null);
     }
 
     @Override
     public Conta save(Conta conta) {
-        Correntista correntista = correntistaRepository.findById(conta.getCorrentista().getId());
+        Correntista correntista = correntistaService.findById(conta.getCorrentista().getId());
         conta.setCorrentista(correntista);
         return contaRepository.save(conta);
+    }
+
+    public Conta findByCorrentista(Correntista correntista) {
+        return contaRepository.findByCorrentista(correntista);
+    }
+
+    public Conta findByNumeroWithTransacoes(String numero) {
+        return contaRepository.findByNumeroWihTransacoes(numero);
+    }
+
+    public Conta findByIdWithTransacoes(Integer id) {
+        return contaRepository.findByIdWithTransacoes(id);
     }
 }

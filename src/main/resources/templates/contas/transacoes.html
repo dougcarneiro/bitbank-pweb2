@@ -1,0 +1,48 @@
+<!doctype html>
+<html lang="pt_BR" xmlns:th="www.thymeleaf.org">
+
+<head>
+    <title>BitBank - Cadastro de Transações</title>
+    <link rel="stylesheet" th:href="@{/css/style.css}" />
+    <link rel="icon" th:href="@{/imagens/favicon.ico}" type="image/x-icon" />
+</head>
+
+<body>
+    <div th:insert="~{cabecalho}"></div>
+    <ul>
+        <li>Conta:
+            <span th:text="${conta.numero}"></span>
+        </li>
+        <li>Correntista:
+            <span th:text="${conta.correntista.nome}"></span>
+        </li>
+        <li>Data abertura:
+            <span th:text=" ${#dates.format(conta.data, 'dd/MM/yyyy')}"></span>
+        </li>
+    </ul>
+    <div style="margin-bottom: 30px;"> </div>
+    <table>
+        <thead>
+            <tr>
+                <th>Descricao</th>
+                <th>Data</th>
+                <th style="text-align: right">Valor</th>
+            </tr>
+        </thead>
+        <tbody>
+            <tr th:each="transacao : ${conta.transacoes}">
+                <td th:text="${transacao.descricao}" />
+                <td th:text=" ${#dates.format(transacao.data, 'dd/MM/yyyy')}" />
+                <td th:text=" ${#numbers.formatCurrency(transacao.valor)}
+" style="text-align: right" />
+            </tr>
+            <th style="font-weight:bold; background-color: darkgray;" colspan="2">Total</th>
+            <td style="font-weight:bold; background-color: darkgray;text-align: right" th:text="
+${#numbers.formatCurrency(conta.saldo)}
+"></td>
+        </tbody>
+    </table>
+    </div>
+</body>
+
+</html>
